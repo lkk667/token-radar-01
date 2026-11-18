@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — which pre-token protocol is worth farming next</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="mark">◉</div>
+    <div>
+      <h1>TOKEN RADAR</h1>
+      <p class="tag">Which pre-token protocol is worth farming next — and what to do about it.</p>
+    </div>
+  </div>
+  <div class="meta" id="meta"></div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button data-tab="board" class="on">Board</button>
+  <button data-tab="live">Live tokens</button>
+  <button data-tab="model">Model &amp; method</button>
+</nav>
+
+<main>
+  <section id="view-board">
+    <div class="stats" id="stats"></div>
+    <div class="controls">
+      <input id="q" type="search" placeholder="Search a protocol…" aria-label="Search protocols">
+      <select id="cat" aria-label="Filter by category"></select>
+      <select id="chain" aria-label="Filter by chain"></select>
+      <label class="check"><input id="wl" type="checkbox"> Watchlist only</label>
+      <select id="sort" aria-label="Sort the board">
+        <option value="rank">Sort: implied value</option>
+        <option value="tvl">Sort: TVL</option>
+        <option value="growth">Sort: 7-day growth</option>
+        <option value="age">Sort: oldest first</option>
+        <option value="name">Sort: name A–Z</option>
+      </select>
+    </div>
+    <p class="count" id="count"></p>
+    <table class="board">
+      <thead><tr>
+        <th>#</th><th>Protocol</th><th>Category</th><th>Chains</th>
+        <th class="num">TVL</th><th class="num">7d</th><th class="num">Age</th>
+        <th class="num">Implied value</th><th class="num">×TVL</th><th></th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="note" id="board-note"></p>
+  </section>
+
+  <section id="view-live" hidden>
+    <h2>Live tokens — the market's own values</h2>
+    <p class="lede">These protocols already have a token that trades, so the board never ranks them by a model. They are here so a reader can see what live tokens are actually worth next to the board's implied values — and so the model's TVL multiples can be checked against them.</p>
+    <table class="board">
+      <thead><tr>
+        <th>Protocol</th><th>Category</th><th>Chains</th>
+        <th class="num">TVL</th><th class="num">Market cap</th><th class="num">mcap / TVL</th><th class="num">7d</th>
+      </tr></thead>
+      <tbody id="live-rows"></tbody>
+    </table>
+  </section>
+
+  <section id="view-model" hidden>
+    <h2>How the value is computed</h2>
+    <p class="lede">No protocol name is ever special-cased. The same formula scores every row, from the snapshot's own figures only.</p>
+    <div class="formula" id="formula"></div>
+    <h3>Category multiples — read off this snapshot's live tokens</h3>
+    <p class="lede">Each multiple is the median market-cap-to-TVL ratio of the live-token protocols in that category (three or more of them, else the snapshot's overall median), clamped to 0.05–0.80. A DEX is priced off live DEXs, a lender off live lenders.</p>
+    <table class="board narrow">
+      <thead><tr><th>Category</th><th class="num">Live tokens</th><th class="num">Multiple</th></tr></thead>
+      <tbody id="mult-rows"></tbody>
+    </table>
+    <h3>Model sandbox — move the constants, watch the board re-rank</h3>
+    <p class="lede">The sandbox re-runs the same formula in your browser. It changes only what you see here; the submitted board is the one the program wrote.</p>
+    <div class="sandbox" id="sandbox"></div>
+    <p class="count" id="sandbox-note"></p>
+  </section>
+
+  <section id="view-detail" hidden>
+    <button class="back" id="back">← Back to the board</button>
+    <div id="detail"></div>
+  </section>
+</main>
+
+<footer>
+  <p>Data: a sealed snapshot of the protocols DefiLlama tracks, fetched 14 November 2026. “Records no token” means the record carries none — it is not proof the protocol has none. An implied value is this entry's own claim, never a promise of a launch, a price or an airdrop.</p>
+  <p>Token Radar · model radar-2 · built for the make.fun token launch radar bounty.</p>
+</footer>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
